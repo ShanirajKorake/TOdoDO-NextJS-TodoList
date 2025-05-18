@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function AddTodo({todos, setTodos}) {
+export default function AddTodo({addTodo}) {
     const [title, setTitle] = useState("");
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -11,20 +11,16 @@ export default function AddTodo({todos, setTodos}) {
     }
     const handleAddTodo = () => {
         if (title.trim() === "") return;
-        const newTodo = {
-            id: Date.now(),
-            title: title,
-            completed: false,
-        };
-        setTodos ((prevTodos) => [...prevTodos, newTodo]);
+        addTodo(title);
         setTitle("");
-        console.log(todos);
     }
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             handleAddTodo();
         }
     }
+
+
   return (
     <div>
         <div className='pl-2 text-sm'>Add new...</div>

@@ -1,11 +1,12 @@
+import { toggleCompleteTodo } from '@/utils/api';
 import React from 'react'
 
-export default function TodoList({ todos, setTodos }) {
+export default function TodoList({ todos, handleToggleComplete, handleDeleteTodo }) {
     return (
         <div className='my-4'>
             <div className='text-sm pl-2'>Todo List</div>
 
-            {todos.map((todo) => (
+            {todos.slice().reverse().map((todo) => (
                 <div key={todo.id} className='flex bg-gray-900 w-fit p-2 rounded-2xl my-1'>
                     <div className={`${todo.completed ? 'flex-1 line-through text-gray-700' : 'flex-1'}`}>
                         {todo.title}
@@ -20,11 +21,7 @@ export default function TodoList({ todos, setTodos }) {
                             className=' size-5 self-center mx-2'
                             checked={todo.completed}
                             onChange={() => {
-                                setTodos((prevTodos) =>
-                                    prevTodos.map((t) =>
-                                        t.id === todo.id ? { ...t, completed: !t.completed } : t
-                                    )
-                                );
+                                handleToggleComplete(todo.id);
                             }}
                         />
                     </div>
@@ -33,9 +30,7 @@ export default function TodoList({ todos, setTodos }) {
                         <button
                             className='rounded-2xl text-yellow-600 underline hover:text-red-700 px-2 cursor-pointer'
                             onClick={() => {
-                                setTodos((prevTodos) =>
-                                    prevTodos.filter((t) => t.id !== todo.id)
-                                );
+                               handleDeleteTodo(todo.id);
                             }}
                         >
                             Delete
